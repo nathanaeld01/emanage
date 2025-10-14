@@ -3,10 +3,10 @@
 namespace App\Providers;
 
 use App\Models\Administrator;
-use App\Models\Client;
-use App\Models\Employee;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Support\ServiceProvider;
+use Modules\Clients\Models\Client;
+use Modules\Employees\Models\Employee;
 
 class AppServiceProvider extends ServiceProvider {
     /**

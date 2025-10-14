@@ -11,6 +11,10 @@ final class ApiResponse {
         null|array $meta = null,
         int $status = 200
     ): JsonResponse {
+        if ($status < 200 || $status >= 300) {
+            $status = 200; // Default to 200 if an invalid status code is provided
+        }
+
         $response = ['success' => true];
 
         if (!empty($message))
@@ -28,6 +32,10 @@ final class ApiResponse {
         int $status = 400,
         array $errors = []
     ): JsonResponse {
+        if ($status < 400 || $status >= 600) {
+            $status = 500; // Default to 500 if an invalid status code is provided
+        }
+
         $response = ['success' => false, 'message' => $message];
 
         if (!empty($errors)) {

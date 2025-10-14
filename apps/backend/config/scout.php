@@ -113,7 +113,7 @@ return [
     */
 
     'tntsearch' => [
-        'storage' => storage_path('scout/tntsearch'), // For example: '/var/www/html/storage/scout'
+        'storage' => storage_path('scout'),
         'fuzziness' => env('TNTSEARCH_FUZZINESS', false),
         'fuzzy' => [
             'prefix_length' => 2,
