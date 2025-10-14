@@ -5,11 +5,20 @@ namespace App\Support;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use Throwable;
 
 class ExceptionsRenderer {
+
+    protected bool $isProd;
+
+    public function __construct() {
+        $this->isProd = app()->isProduction();
+    }
+
     /**
      * Render the exception into an HTTP response.
      *
@@ -19,11 +28,13 @@ class ExceptionsRenderer {
     public function __invoke(Throwable $e): JsonResponse {
         // Map exception types to handler methods
         $exceptionHandler = match (true) {
-            $e instanceof AuthenticationException => [$this, 'render401'],
-            $e instanceof AuthorizationException => [$this, 'render403'],
-            $e instanceof ValidationException => [$this, 'render422'],
-            $e instanceof ModelNotFoundException => [$this, 'render404'],
-            default => [$this, 'renderDefault'],
+            $e instanceof AuthenticationException => [$this, 'authentication'],
+            $e instanceof AuthorizationException => [$this, 'authorization'],
+            $e instanceof ValidationException => [$this, 'validations'],
+            $e instanceof ModelNotFoundException => [$this, 'model_not_found'],
+            $e instanceof RouteNotFoundException => [$this, 'route_not_found'],
+            $e instanceof QueryException => [$this, 'query'],
+            default => [$this, 'default'],
         };
 
         return $exceptionHandler($e);
@@ -32,7 +43,7 @@ class ExceptionsRenderer {
     /**
      * Handle unauthenticated requests.
      */
-    public function render401(AuthenticationException $e): JsonResponse {
+    protected function authentication(AuthenticationException $e): JsonResponse {
         return api()->error(
             message: 'You are not authenticated',
             status: 401
@@ -42,7 +53,7 @@ class ExceptionsRenderer {
     /**
      * Handle unauthorized requests.
      */
-    public function render403(AuthorizationException $e): JsonResponse {
+    protected function authorization(AuthorizationException $e): JsonResponse {
         return api()->error(
             message: 'You do not have permission to perform this action',
             status: 403
@@ -52,9 +63,8 @@ class ExceptionsRenderer {
     /**
      * Handle model not found exceptions.
      */
-    public function render404(ModelNotFoundException $e): JsonResponse {
+    protected function model_not_found(ModelNotFoundException $e): JsonResponse {
         $model = class_basename($e->getModel());
-
         return api()->error(
             message: "$model not found",
             status: 404
@@ -62,9 +72,19 @@ class ExceptionsRenderer {
     }
 
     /**
+     * Handle route not found exceptions.
+     */
+    protected function route_not_found(RouteNotFoundException $e): JsonResponse {
+        return api()->error(
+            message: "Route not found",
+            status: 404
+        );
+    }
+
+    /**
      * Handle validation exceptions.
      */
-    public function render422(ValidationException $e): JsonResponse {
+    protected function validations(ValidationException $e): JsonResponse {
         return api()->error(
             message: 'Validation failed',
             errors: $e->errors(),
@@ -73,14 +93,29 @@ class ExceptionsRenderer {
     }
 
     /**
+     * Handle database query exceptions.
+     */
+    protected function query(QueryException $e): JsonResponse {
+        return api()->error(
+            message: $this->isProd ? 'Something went wrong' : $e->getMessage(),
+            errors: $this->isProd ? [] : [
+                'exception' => get_class($e),
+                'message' => $e->getMessage(),
+                'sql' => $e->getSql(),
+                'bindings' => $e->getBindings(),
+                'code' => $e->getCode(),
+            ],
+            status: 500,
+        );
+    }
+
+    /**
      * Handle all other exceptions.
      */
-    public function renderDefault(Throwable $e): JsonResponse {
-        $isProd = app()->isProduction();
-
+    protected function default(Throwable $e): JsonResponse {
         return api()->error(
-            message: $isProd ? 'Something went wrong' : $e->getMessage(),
-            errors: $isProd ? [] : [
+            message: $this->isProd ? 'Something went wrong' : $e->getMessage(),
+            errors: $this->isProd ? [] : [
                 'exception' => get_class($e),
                 'message' => $e->getMessage(),
                 'trace' => $e->getTrace(),
