@@ -1,0 +1,90 @@
+{
+	"folders": [
+		{
+			"name": "eManage",
+			"path": "."
+		}
+	],
+	"settings": {
+		// --- General ---
+		"files.eol": "\n",
+		"files.insertFinalNewline": true,
+		"files.trimTrailingWhitespace": true,
+		"editor.tabSize": 4,
+		"editor.insertSpaces": true,
+		"editor.formatOnSave": true,
+		"editor.defaultFormatter": "esbenp.prettier-vscode",
+
+		// --- PHP (Laravel) ---
+		"[php]": {
+			"editor.defaultFormatter": "DEVSENSE.phptools-vscode"
+		},
+		"php.validate.executablePath": "/usr/bin/php",
+		"php.suggest.basic": false,
+		"php.format.codeStyle": "K&R",
+		"php.validate.run": "onType",
+
+		// Laravel Blade support (requires `onecentlin.laravel-blade`)
+		"bladeFormatter.format.indentSize": 4,
+		"bladeFormatter.format.wrapLineLength": 120,
+
+		// --- TypeScript / React / TanStack ---
+		"[typescript]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[typescriptreact]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[javascript]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+		"[json]": {
+			"editor.defaultFormatter": "esbenp.prettier-vscode"
+		},
+
+		// Strict type checking for TS
+		"typescript.tsdk": "node_modules/typescript/lib",
+		"typescript.preferences.importModuleSpecifier": "non-relative",
+		"typescript.format.semicolons": "insert",
+
+		// --- Prettier ---
+		"prettier.singleQuote": true,
+		"prettier.semi": true,
+		"prettier.trailingComma": "all",
+		"prettier.arrowParens": "avoid",
+		"prettier.printWidth": 100,
+		"prettier.useTabs": true,
+		"prettier.tabWidth": 4,
+		"prettier.enable": true,
+
+		// --- ESLint ---
+		"eslint.validate": ["javascript", "typescript", "typescriptreact"],
+
+		// --- Nx / Monorepo ---
+
+		// --- Terminal ---
+		"terminal.integrated.defaultProfile.linux": "bash",
+		"terminal.integrated.defaultProfile.osx": "bash",
+		"terminal.integrated.defaultProfile.windows": "PowerShell",
+
+		// --- Editor UX ---
+		"explorer.compactFolders": false,
+		"editor.rulers": [100],
+		"editor.minimap.enabled": true,
+		"editor.codeActionsOnSave": {
+			"source.fixAll.eslint": "explicit",
+			"source.fixAll.ts": "explicit"
+		}
+	},
+	"extensions": {
+		"recommendations": [
+			"DEVSENSE.phptools-vscode", // PHP IntelliSense
+			"shufo.vscode-blade-formatter", // Blade formatting
+			"onecentlin.laravel-blade", // Blade syntax highlighting
+			"esbenp.prettier-vscode", // Prettier
+			"dbaeumer.vscode-eslint", // ESLint
+			"nrwl.angular-console", // Nx Console
+			"ms-azuretools.vscode-docker" // Docker
+		]
+	}
+}
