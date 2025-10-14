@@ -20,7 +20,6 @@ class EmployeeController {
                 'name' => $employee->full_name,
                 'email' => $data->email,
                 'password' => Hash::make($password), // secure random password
-                'new_value' => 'true or false'
             ]);
         });
 
