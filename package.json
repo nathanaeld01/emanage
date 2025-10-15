@@ -1,18 +1,21 @@
 {
-	"name": "@emanage/source",
+	"name": "emanage",
 	"version": "0.0.0",
 	"license": "MIT",
 	"scripts": {},
 	"private": true,
-	"dependencies": {},
+	"dependencies": {
+		"react": "^19.2.0",
+		"react-dom": "^19.2.0"
+	},
 	"devDependencies": {
-		"@nx/js": "20.8.0",
-		"@swc-node/register": "~1.9.1",
-		"@swc/core": "~1.5.7",
-		"@swc/helpers": "~0.5.11",
-		"nx": "20.8.0",
-		"prettier": "^2.6.2",
-		"tslib": "^2.3.0",
-		"typescript": "~5.7.2"
+		"@nx/js": "21.6.4",
+		"@tailwindcss/vite": "^4.1.14",
+		"nx": "21.6.4",
+		"prettier": "^3.6.2",
+		"prettier-plugin-tailwindcss": "^0.7.0",
+		"tailwindcss": "^4.1.14",
+		"tslib": "^2.8.1",
+		"typescript": "~5.9.3"
 	}
 }
