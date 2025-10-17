@@ -15,9 +15,9 @@
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
 		"paths": {
-			"@emanage/ui/*": ["libs/ui/src/ui/*"],
-			"@emanage/ui/utils": ["libs/ui/src/utils/index.ts"],
-			"@emanage/ui/styles/*": ["libs/ui/src/styles/*"]
+			"@emanage/ui/*": ["./libs/ui/src/ui/*"],
+			"@emanage/ui/utils": ["./libs/ui/src/utils.ts"],
+			"@emanage/ui/styles/*": ["./libs/ui/src/styles/*"]
 		},
 		"skipLibCheck": true,
 		"strict": true,
