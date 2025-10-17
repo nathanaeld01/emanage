@@ -1,0 +1,32 @@
+{
+	"name": "backend",
+	"sourceRoot": "apps/backend",
+	"root": "apps/backend",
+	"projectType": "application",
+	"targets": {
+		"serve": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "php artisan serve --host=0.0.0.0 --port=8000",
+				"cwd": "apps/backend",
+				"parallel": true
+			},
+			"continuous": true
+		},
+		"migrate": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "php artisan migrate",
+				"cwd": "apps/backend"
+			}
+		},
+		"test": {
+			"executor": "nx:run-commands",
+			"options": {
+				"command": "vendor/bin/phpunit",
+				"cwd": "apps/backend"
+			}
+		}
+	},
+	"tags": ["type:backend"]
+}
