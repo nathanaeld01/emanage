@@ -1,6 +1,7 @@
 {
 	"compilerOptions": {
 		"composite": true,
+		"customConditions": ["development"],
 		"declarationMap": true,
 		"emitDeclarationOnly": true,
 		"importHelpers": true,
@@ -13,9 +14,13 @@
 		"noImplicitOverride": true,
 		"noImplicitReturns": true,
 		"noUnusedLocals": true,
+		"paths": {
+			"@emanage/ui/*": ["libs/ui/src/ui/*"],
+			"@emanage/ui/utils": ["libs/ui/src/utils/index.ts"],
+			"@emanage/ui/styles/*": ["libs/ui/src/styles/*"]
+		},
 		"skipLibCheck": true,
 		"strict": true,
-		"target": "es2022",
-		"customConditions": ["development"]
+		"target": "es2022"
 	}
 }
